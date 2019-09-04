@@ -4,7 +4,7 @@ Zbiór komponentów opisujących entity do gry 2d topdown, którą tworzę.
 * [Animator](https://github.com/KrzysiekSlawik/component-based-entity-model/blob/master/README.md#spritesheetanimator)
 * [Inne](https://github.com/KrzysiekSlawik/component-based-entity-model/blob/master/README.md#others)
 ## Brain
-Brain to komponent odpowiedzialny za AI każdego entity, które potrzebuje AI. Zbudowane zostało w taki sposób, by edycja z poziomu edytora Unity była możliwa, wygodna nawet w standardowym inspektorze i otwarta na rozszerzenia. Główna część komponentu oparta jest o wzorzec projektowy FSM. Rozdzielenie warstwy stanów i przejść pozwala na częstsze wykorzystywanie już napisanego kodu, a nawet tworzenie całkiem nowych stanów nie dotykając kodu.
+Brain to komponent odpowiedzialny za AI każdego entity, które potrzebuje AI. Zbudowane zostało w taki sposób, by edycja z poziomu edytora Unity była możliwa, wygodna nawet w standardowym inspektorze i otwarta na rozszerzenia. Główna część komponentu oparta jest o wzorzec projektowy FSM. Rozdzielenie warstwy stanów i przejść pozwala na częstsze wykorzystywanie już napisanego kodu, a nawet tworzenie całkiem nowych stanów nie dotykając kodu. [Diagram UML](https://drive.google.com/open?id=1ha2CFAL7Zr7ampZyhgkJxgS-NgF7JFbA)
 Metody:
 * **Start()** inicjalizacja komponentu i wszystkich jego składowych, wywoływana automatycznie(przy tworzeniu komponentu)
 * **Update()** aktualizacja komponentu i komunikacja z jego składowymi, wywoływana automatycznie(raz na klatkę symulacji)
