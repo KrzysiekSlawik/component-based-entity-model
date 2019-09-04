@@ -1,5 +1,8 @@
 # component-based-entity-model
-unity project
+Zbiór komponentów opisujących entity do gry 2d topdown, którą tworzę. 
+* [Brain](https://github.com/KrzysiekSlawik/component-based-entity-model/blob/master/README.md#brain)
+* [Animator](https://github.com/KrzysiekSlawik/component-based-entity-model/blob/master/README.md#spritesheetanimator)
+* [Inne](https://github.com/KrzysiekSlawik/component-based-entity-model/blob/master/README.md#others)
 ## Brain
 Brain to komponent odpowiedzialny za AI każdego entity, które potrzebuje AI. Zbudowane zostało w taki sposób, by edycja z poziomu edytora Unity była możliwa, wygodna nawet w standardowym inspektorze i otwarta na rozszerzenia. Główna część komponentu oparta jest o wzorzec projektowy FSM. Rozdzielenie warstwy stanów i przejść pozwala na częstsze wykorzystywanie już napisanego kodu, a nawet tworzenie całkiem nowych stanów nie dotykając kodu.
 Metody:
@@ -7,6 +10,7 @@ Metody:
 * **Update()** aktualizacja komponentu i komunikacja z jego składowymi, wywoływana automatycznie(raz na klatkę symulacji)
 * **PlayerPosition()** zwraca pozycję najbliższego z graczy
 * planowane rozszerzenie o dodatkowe zapytania o otoczenie
+![alt text](https://github.com/KrzysiekSlawik/component-based-entity-model/blob/master/brain.png "widok w inspektorze")
 ### BBehaviour
 Abstrakcyjna klasa odpowiedzialna za sterowanie entity. Obiekty tej klasy stanowią komponenty dla BState i zawierają referencję do Brain, dzięki czemu przepływ informacji jest obustronny. Klasa BBehaviour dziedziczy po UnityEngine.ScriptableObject dzięki czemu można tworzyć i modyfikować serializowane obiekty już z poziomu edytora.
 Metody:
@@ -55,15 +59,23 @@ Komponent odpowiedzialny za zarządzanie animacjami entity. Oparty o wzorzec pro
 Metody:
 * **SetFloat(string key, float value)** aktualizowanie zmiennych typu float ustalonych w inspektorze
 * **SetBool(string key, bool value)** aktualizowanie zmiennych typu bool ustalonych w inspektorze
-* **GetFloat(string key) getter dla floatów ustalonych w inspektorze
-* **GetBool(string key) getter dla booli ustalonych w inspektorze
+* **GetFloat(string key)** getter dla floatów ustalonych w inspektorze
+* **GetBool(string key)** getter dla booli ustalonych w inspektorze
 * **TransitionTo(string stateName)** przejdź do stanu o danej nazwie
+![alt text](https://github.com/KrzysiekSlawik/component-based-entity-model/blob/master/animcontroller.png "widok w inspektorze")
 ### SSAState
 Obiekt w pełni serializowalny odpowiedzialny za przedstawianie stanu animatora. Zawiera wszystkie przejścia i animację dotyczącą danego stanu.
+* **Inject(AnimatorController controller)** wykorzystywany do przypisania referencji kontrolera
 #### BoolCondition
-Obiekt prezentujący warunek oparty o zmienną boolowską. Zawiera metodę 
+Obiekt prezentujący warunek oparty o zmienną boolowską. Zawiera metodę **Eval(AnimatorController controller)** wykorzystywaną przez SSAState w metodzie **Update()**.
 #### FloatCondition
+Obiekt prezentujący warunek oparty o zmienną typu float. Zawiera metodę **Eval(AnimatorController controller)** wykorzystywaną przez SSAState w metodzie **Update()**.
 #### Transition
-#### Body
+Obiekt przedstawiający wszystkie dane przejścia:
+* dowolną liczbę BoolCondition
+* dowolną liczbę FloatCondition
+* nazwa stanu, do którego prowadzi przejście
+
+Oraz metodę **Eval()**, wywołuje metody Eval() na wszystkich BoolCondition i FloatCondition należących do Transition.
 ## PathFinding
 W fazie projektowej i doszkalania się - w chwili obecnej częściowo działa, jednak przez ilość błędów nie jest wykorzytywany, dlatego też nie jest opisany w tej dokumentacji.
